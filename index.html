@@ -231,14 +231,7 @@ pre.code{
 <!-- star bg -->
 <div class="stars" id="stars"></div>
 
-<!-- hidden youtube autoplay -->
-<iframe
-  id="ytBg"
-  src="https://www.youtube.com/embed/0dJe09nMuHA?autoplay=1&controls=0&loop=1&playlist=0dJe09nMuHA&rel=0&modestbranding=1&mute=0"
-  allow="autoplay; encrypted-media"
-  frameborder="0"
-  style="position:fixed;bottom:-300px;left:-300px;width:1px;height:1px;opacity:0;pointer-events:none;"
-></iframe>
+
 
 <div class="wrapper">
 
@@ -363,6 +356,26 @@ function showToast(msg){
   t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2200);
 }
+</script>
+<!-- background music -->
+<audio id="bgMusic" loop autoplay>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+<script>
+  // Try autoplay, if blocked play on first interaction
+  const music = document.getElementById('bgMusic');
+  music.volume = 0.5;
+  const tryPlay = () => {
+    music.play().then(() => {
+      document.removeEventListener('click', tryPlay);
+      document.removeEventListener('keydown', tryPlay);
+      document.removeEventListener('touchstart', tryPlay);
+    }).catch(() => {});
+  };
+  tryPlay();
+  document.addEventListener('click', tryPlay);
+  document.addEventListener('keydown', tryPlay);
+  document.addEventListener('touchstart', tryPlay);
 </script>
 </body>
 </html>
